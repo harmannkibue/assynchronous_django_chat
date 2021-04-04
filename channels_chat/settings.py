@@ -25,12 +25,13 @@ SECRET_KEY = '0nz)%n*dg%507rd88m-7@eycgyv@yu&w#$w1@la_(hil57=6yi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,8 +69,8 @@ TEMPLATES = [
     },
 ]
 
+# The wsgi routing
 WSGI_APPLICATION = 'channels_chat.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -119,3 +120,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Channels asgi routing
+ASGI_APPLICATION = 'channels_chat.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
